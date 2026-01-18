@@ -1,0 +1,7 @@
+<form method="post">
+  {% csrf_token %}
+  Title: <input type="text" name="title"><br>
+  Author ID: <input type="number" name="author_id"><br>
+  Publication Year: <input type="number" name="publication_year"><br>
+  <button type="submit">Add Book</button>
+</form>
