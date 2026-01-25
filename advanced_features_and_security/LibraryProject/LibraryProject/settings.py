@@ -121,3 +121,24 @@ STATIC_URL = 'static/'
 
 AUTH_USER_MODEL = "bookshelf.CustomUser"
 
+# SECURITY CONFIGURATION NOTES:
+# DEBUG is disabled for production to avoid leaking sensitive data.
+# SECURE_BROWSER_XSS_FILTER enables browser XSS filtering.
+# X_FRAME_OPTIONS prevents clickjacking.
+# CSRF_COOKIE_SECURE and SESSION_COOKIE_SECURE enforce HTTPS cookies.
+
+
+DEBUG = False
+
+# Enable browser XSS filter
+SECURE_BROWSER_XSS_FILTER = True
+
+# Prevent MIME-type sniffing
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Prevent clickjacking
+X_FRAME_OPTIONS = "DENY"
+
+# Force cookies over HTTPS
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
