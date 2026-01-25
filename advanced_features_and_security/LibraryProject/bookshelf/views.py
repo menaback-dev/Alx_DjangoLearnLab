@@ -41,11 +41,11 @@ def add_book_secure(request):
     Uses Django forms for validation and sanitization.
     """
     if request.method == "POST":
-        form = BookForm(request.POST)
+        form = ExampleForm(request.POST)
         if form.is_valid():  # Input validation
             form.save()
     else:
-        form = BookForm()
+        form = ExampleForm()
 
     return render(request, "bookshelf/form_example.html", {"form": form})
 
@@ -59,11 +59,11 @@ def edit_book_secure(request, book_id):
     book = get_object_or_404(Book, id=book_id)
 
     if request.method == "POST":
-        form = BookForm(request.POST, instance=book)
+        form = ExampleForm(request.POST, instance=book)
         if form.is_valid():  # Input validation
             form.save()
     else:
-        form = BookForm(instance=book)
+        form = ExampleForm(instance=book)
 
     return render(request, "bookshelf/form_example.html", {"form": form})
 
