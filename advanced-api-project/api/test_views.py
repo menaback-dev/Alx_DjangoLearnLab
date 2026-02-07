@@ -50,7 +50,7 @@ class BookAPITest(APITestCase):
             "author": self.author.id
         }
         res = self.client.post(self.create_url, data)
-        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_create_book_authenticated(self):
         self.client.login(username="tester", password="pass123")
