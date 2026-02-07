@@ -32,15 +32,15 @@ class BookAPITest(APITestCase):
 
     #LIST
     def test_list_books(self):
-        res = self.client.get(self.list_url)
-        self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(res.data), 2)
+        response = self.client.get(self.list_url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 2)
 
     #DETAIL
     def test_get_book_detail(self):
-        res = self.client.get(f"/api/books/{self.book1.id}/")
-        self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(res.data["title"], "Alpha")
+        response = self.client.get(f"/api/books/{self.book1.id}/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["title"], "Alpha")
 
     #CREATE requires auth
     def test_create_book_requires_auth(self):
@@ -49,8 +49,8 @@ class BookAPITest(APITestCase):
             "publication_year": 2021,
             "author": self.author.id
         }
-        res = self.client.post(self.create_url, data)
-        self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
+        response = self.client.post(self.create_url, data)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_create_book_authenticated(self):
         self.client.login(username="tester", password="pass123")
@@ -60,14 +60,14 @@ class BookAPITest(APITestCase):
             "publication_year": 2021,
             "author": self.author.id
         }
-        res = self.client.post(self.create_url, data)
-        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        response = self.client.post(self.create_url, data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     #UPDATE
     def test_update_book(self):
         self.client.login(username="tester", password="pass123")
 
-        res = self.client.put(
+        response = self.client.put(
             f"/api/books/update/{self.book1.id}/",
             {
                 "title": "Alpha Updated",
@@ -75,31 +75,31 @@ class BookAPITest(APITestCase):
                 "author": self.author.id
             }
         )
-        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     #DELETE
     def test_delete_book(self):
         self.client.login(username="tester", password="pass123")
 
-        res = self.client.delete(
+        response = self.client.delete(
             f"/api/books/delete/{self.book1.id}/"
         )
-        self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     #FILTER
     def test_filter_books(self):
-        res = self.client.get(self.list_url + "?title=Alpha")
-        self.assertEqual(res.status_code, 200)
-        self.assertEqual(len(res.data), 1)
+        response = self.client.get(self.list_url + "?title=Alpha")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data), 1)
 
     #SEARCH
     def test_search_books(self):
-        res = self.client.get(self.list_url + "?search=Beta")
-        self.assertEqual(res.status_code, 200)
-        self.assertEqual(len(res.data), 1)
+        response = self.client.get(self.list_url + "?search=Beta")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data), 1)
 
     #ORDERING
     def test_order_books(self):
-        res = self.client.get(self.list_url + "?ordering=publication_year")
-        self.assertEqual(res.status_code, 200)
-        self.assertEqual(res.data[0]["publication_year"], 2020)
+        response = self.client.get(self.list_url + "?ordering=publication_year")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data[0]["publication_year"], 2020)
