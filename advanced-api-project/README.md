@@ -27,3 +27,13 @@ GET /api/books/<id>/
 POST /api/books/create/
 PUT /api/books/<id>/update/
 DELETE /api/books/<id>/delete/
+
+
+## Tests cover:
+- CRUD operations
+- permissions (auth required for write)
+- filtering, search, ordering
+- response status codes
+
+Run with:
+python manage.py test api
