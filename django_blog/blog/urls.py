@@ -10,7 +10,7 @@ from .views import (
     CommentCreateView,
     CommentUpdateView,
     CommentDeleteView,
-    TagPostListView,
+    PostByTagListView,
     SearchResultsView,
 )
 
@@ -28,6 +28,6 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('profile/', views.profile, name='profile'),
     path('accounts/', include('django.contrib.auth.urls')),
-    path("tags/<slug:tag_slug>/", TagPostListView.as_view(), name="posts-by-tag"),
+    path("tags/<slug:tag_slug>/", PostByTagListView.as_view(), name="posts-by-tag"),
     path("search/", SearchResultsView.as_view(), name="search"),
 ]
