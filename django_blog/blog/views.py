@@ -144,7 +144,7 @@ class TagPostListView(ListView):
 
     def get_queryset(self):
         return Post.objects.filter(
-            tags__name__iexact=self.kwargs["tag_name"]
+            tags__slug=self.kwargs["tag_slug"]
         ).distinct()
 
     def get_context_data(self, **kwargs):
