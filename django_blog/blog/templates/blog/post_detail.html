@@ -10,6 +10,16 @@
     <a href="{% url 'post-update' object.pk %}">Edit</a>
     <a href="{% url 'post-delete' object.pk %}">Delete</a>
 {% endif %}
+<p>
+Tags:
+{% for tag in object.tags.all %}
+    <a href="{% url 'tag-posts' tag.name %}">
+        {{ tag.name }}
+    </a>
+{% empty %}
+    No tags
+{% endfor %}
+</p>
 
 <hr>
 <h3>Comments</h3>

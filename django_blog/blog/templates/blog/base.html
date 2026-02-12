@@ -17,6 +17,10 @@
                 <li><a href="{% url 'register' %}">Register</a></li>
                 <li><a href="{% url 'post-list' %}">Blog Posts</a></li>
             </ul>
+            <form action="{% url 'search' %}" method="get">
+                <input type="text" name="q" placeholder="Search posts">
+                <button type="submit">Search</button>
+            </form>
         </nav>
     </header>
 
