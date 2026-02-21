@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 from django.contrib.auth import authenticate,get_user_model
 from .serializers import RegisterSerializer, UserSerializer
 
-User = get_user_model()
+CustomUser = get_user_model()
 
 class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
@@ -52,17 +52,21 @@ class ProfileView(APIView):
         return Response(serializer.data)
 
 
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def follow_user(request, user_id):
-    user_to_follow = User.objects.get(id=user_id)
-    request.user.following.add(user_to_follow)
-    return Response({"message": "User followed"})
+class FollowUserView(generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = CustomUser.objects.all()
+
+    def post(self, request, user_id):
+        user_to_follow = CustomUser.objects.get(id=user_id)
+        request.user.following.add(user_to_follow)
+        return Response({"message": "User followed"})
 
 
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def unfollow_user(request, user_id):
-    user_to_unfollow = User.objects.get(id=user_id)
-    request.user.following.remove(user_to_unfollow)
-    return Response({"message": "User unfollowed"})
+class UnfollowUserView(generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = CustomUser.objects.all()
+
+    def post(self, request, user_id):
+        user_to_unfollow = CustomUser.objects.get(id=user_id)
+        request.user.following.remove(user_to_unfollow)
+        return Response({"message": "User unfollowed"})
