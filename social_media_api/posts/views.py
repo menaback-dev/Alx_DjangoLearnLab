@@ -37,4 +37,4 @@ class FeedView(generics.ListAPIView):
 
         return Post.objects.filter(
             author__in=following_users
-        ).order_by('-created_at')
+        ).order_by()
