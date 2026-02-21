@@ -42,12 +42,9 @@ class FeedView(generics.ListAPIView):
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
 def like_post(request, pk):
-    post = generics.get_object_or_404(Post, pk=pk)  # checker exact
+    post = generics.get_object_or_404(Post, pk=pk)
 
-    like, created = Like.objects.get_or_create(      # checker exact
-        user=request.user,
-        post=post
-    )
+    like, created = Like.objects.get_or_create(user=request.user, post=post)
 
     if created:
         Notification.objects.create(
